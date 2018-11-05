@@ -80,8 +80,14 @@ public class JavaAlgorithms {
      * Х Х 3
      * Х   Х
      * Х х Х
+     *
+     * ======================================================
+     *
+     * Time - O(n)
+     * Space - O(n)
      */
     static public int josephTask(int menNumber, int choiceInterval) {
+
         int safePlace = 0;
         for (int i = 1; i < menNumber; i++)
             safePlace = (safePlace + choiceInterval) % (i + 1);
@@ -113,8 +119,14 @@ public class JavaAlgorithms {
      * <p>
      * Справка: простым считается число, которое делится нацело только на 1 и на себя.
      * Единица простым числом не считается.
+     *
+     * =========================================
+     *
+     * Time - O(n^2)
+     * Space - O(n)
      */
     static public int calcPrimesNumber(int limit) {
+
         int result = 0;
         for (int i = 1; i <= limit; i++) {
             if (isPrime(i)) result++;

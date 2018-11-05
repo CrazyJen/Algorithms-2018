@@ -34,8 +34,14 @@ public class JavaTasks {
      * 19:56:14
      * <p>
      * В случае обнаружения неверного формата файла бросить любое исключение.
+     *
+     * ==========================================
+     *
+     * Time -
+     * Space - O(n)
      */
     static public void sortTimes(String inputName, String outputName) {
+
         ArrayList<Integer> inputList = new ArrayList<>();
         try {
             String readTime;
@@ -57,14 +63,12 @@ public class JavaTasks {
 
         Sorts.quickSort(times);
 
-
         StringBuilder output = new StringBuilder();
 
         for (int time : times) {
             output.append(String.format("%02d:%02d:%02d\n", time / 3600,
                     (time / 60) % 60, time % 60));
         }
-
 
         try {
             FileWriter out = new FileWriter(outputName);
@@ -187,8 +191,14 @@ public class JavaTasks {
      * second = [null null null null null 1 3 9 13 18 23]
      * <p>
      * Результат: second = [1 3 4 9 9 13 15 20 23 28]
+     *
+     * ====================================
+     *
+     * Time - O(n)
+     * Space - O(n)
      */
     static <T extends Comparable<T>> void mergeArrays(T[] first, T[] second) {
+
         int i = 0;
         int j = first.length;
         int k = 0;

@@ -37,6 +37,10 @@ class TaskTestsJava : AbstractTaskTests() {
         JavaTasks.mergeArrays<Int>(arrayOf(4, 9, 15, 20, 23), result)
         assertArrayEquals(arrayOf(1, 3, 4, 9, 9, 13, 15, 18, 20, 23, 23), result)
 
+        val anotherResult = arrayOf(null, null, null, null, 1, 1, 1, 2, 2, 2, 3)
+        JavaTasks.mergeArrays<Int>(arrayOf(9, 9, 10, 11), anotherResult)
+        assertArrayEquals(arrayOf(1, 1, 1, 2, 2, 2, 3, 9, 9, 10, 11), anotherResult)
+
         run {
             val (first, second, expectedResult) = generateArrays(20000, 20000)
             JavaTasks.mergeArrays<Int>(first, second)
