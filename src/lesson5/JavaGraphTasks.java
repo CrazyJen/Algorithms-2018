@@ -2,11 +2,11 @@ package lesson5;
 
 import kotlin.NotImplementedError;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @SuppressWarnings("unused")
 public class JavaGraphTasks {
+
     /**
      * Эйлеров цикл.
      * Средняя
@@ -34,7 +34,44 @@ public class JavaGraphTasks {
      * связного графа ровно по одному разу
      */
     public static List<Graph.Edge> findEulerLoop(Graph graph) {
-        throw new NotImplementedError();
+        List<Graph.Edge> result = new ArrayList<>();
+        if (!isEulerian(graph)) return result;
+
+        Stack<Graph.Vertex> stack = new Stack<>();
+        Set<Graph.Vertex> vertices = graph.getVertices();
+        Set<Graph.Edge> edges = graph.getEdges();
+        Iterator<Graph.Vertex> iterator = vertices.iterator();
+        Graph.Vertex first = iterator.next();
+        stack.push(first);
+
+        while (!stack.empty()) {
+            Graph.Vertex currentVertex = stack.peek();
+            for (Graph.Vertex vertex : vertices) {
+                Graph.Edge currentEdge = graph.getConnection(currentVertex, vertex);
+                if (currentEdge != null && edges.contains(currentEdge)) {
+                    stack.push(vertex);
+                    edges.remove(currentEdge);
+                    result.add(currentEdge);
+                    break;
+                }
+            }
+            if (stack.peek() == currentVertex)
+                stack.pop();
+        }
+        return result;
+    }
+
+    /**
+     * Вспомогательная функция для проверки "эйлеровости" графа.
+     * Для того, чтобы в графе присутствовал Эйлеров цикл, достаточно:
+     *  1) Все вершины имеют чётную степень
+     *  2) Граф связный
+     */
+    private static boolean isEulerian (Graph graph) {
+        for (Graph.Vertex vertex: graph.getVertices()) {
+            if (graph.getNeighbors(vertex).size() % 2 != 0) return false;
+        }
+        return true;
     }
 
     /**
