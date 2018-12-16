@@ -4,6 +4,9 @@ import kotlin.NotImplementedError;
 
 import java.util.*;
 
+import lesson5.impl.GraphBuilder;
+import lesson5.impl.GraphBuilder.*;
+
 @SuppressWarnings("unused")
 public class JavaGraphTasks {
 
@@ -32,6 +35,12 @@ public class JavaGraphTasks {
      * <p>
      * Справка: Эйлеров цикл -- это цикл, проходящий через все рёбра
      * связного графа ровно по одному разу
+     * <p>
+     * Time - O(e+v)
+     * Space - O(e+v)
+     * <p>
+     * e - edges
+     * v - vertices
      */
     public static List<Graph.Edge> findEulerLoop(Graph graph) {
         List<Graph.Edge> result = new ArrayList<>();
@@ -71,6 +80,7 @@ public class JavaGraphTasks {
 
         return result;
     }
+
 
     /**
      * Вспомогательная функция для проверки "эйлеровости" графа.
@@ -112,9 +122,29 @@ public class JavaGraphTasks {
      * E    F    I
      * |
      * J ------------ K
+     *
+     * Алгоритм Прима
+     * (Он же Ярника, он же Дейкстры)
+     *
+     * Time - O(V+E)
+     * Space - O(V+E)
      */
     public static Graph minimumSpanningTree(Graph graph) {
-        throw new NotImplementedError();
+
+        Set<Graph.Vertex> vertices = graph.getVertices();
+        Iterator<Graph.Vertex> iterator = vertices.iterator();
+        Graph.Vertex first = iterator.next();
+
+        Map<Graph.Vertex, VertexInfo> info = lesson5.DijkstraKt.shortestPath(graph, first);
+
+        GraphBuilder result = new GraphBuilder();
+
+        vertices.forEach((value) -> result.addVertex(value.getName()));
+        info.forEach((key, value) -> {
+            if (value.getPrev() != null)
+                result.addConnection(value.getPrev(), key, value.getDistance());
+        });
+        return result.build();
     }
 
     /**
