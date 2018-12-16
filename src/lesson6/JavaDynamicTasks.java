@@ -2,6 +2,7 @@ package lesson6;
 
 import kotlin.NotImplementedError;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("unused")
@@ -61,9 +62,41 @@ public class JavaDynamicTasks {
      * Если самых длинных возрастающих подпоследовательностей несколько (как в примере),
      * то вернуть ту, в которой числа расположены раньше (приоритет имеют первые числа).
      * В примере ответами являются 2, 8, 9, 12 или 2, 5, 9, 12 -- выбираем первую из них.
+     * <p>
+     * Time - O(N^2)
+     * Space - O(N)
      */
     public static List<Integer> longestIncreasingSubSequence(List<Integer> list) {
-        throw new NotImplementedError();
+
+        int size = list.size();
+        int[] d = new int[size];
+        int[] prev = new int[size];
+
+        for (int i = 0; i < size; i++) {
+            d[i] = 1;
+            prev[i] = -1;
+            for (int j = 0; j < size; j++) {
+                if (list.get(j) < list.get(i) && d[j] + 1 > d[i])
+                    d[i] = d[j] + 1;
+                prev[i] = j;
+            }
+        }
+        int pos = 0;
+        int length = d[0];
+        for (int i = 0; i < size; i++) {
+            if (d[i] > length) {
+                pos = i;
+                length = d[i];
+            }
+        }
+
+        List<Integer> result = new ArrayList<>();
+
+        while (pos != -1) {
+            result.add(0, list.get(pos));
+            pos = prev[pos];
+        }
+        return result;
     }
 
     /**
