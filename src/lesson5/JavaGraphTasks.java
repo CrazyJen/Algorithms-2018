@@ -123,8 +123,6 @@ public class JavaGraphTasks {
      * |
      * J ------------ K
      *
-     * Алгоритм Прима
-     * (Он же Ярника, он же Дейкстры)
      *
      * Time - O(V+E)
      * Space - O(V+E)
