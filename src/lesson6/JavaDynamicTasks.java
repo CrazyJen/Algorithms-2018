@@ -67,7 +67,8 @@ public class JavaDynamicTasks {
      * Space - O(N)
      */
     public static List<Integer> longestIncreasingSubSequence(List<Integer> list) {
-
+        List<Integer> result = new ArrayList<>();
+        if (list.isEmpty()) return result;
         int size = list.size();
         int[] d = new int[size];
         int[] prev = new int[size];
@@ -76,9 +77,10 @@ public class JavaDynamicTasks {
             d[i] = 1;
             prev[i] = -1;
             for (int j = 0; j < size; j++) {
-                if (list.get(j) < list.get(i) && d[j] + 1 > d[i])
+                if (list.get(j) < list.get(i) && d[j] + 1 > d[i]) {
                     d[i] = d[j] + 1;
-                prev[i] = j;
+                    prev[i] = j;
+                }
             }
         }
         int pos = 0;
@@ -90,7 +92,6 @@ public class JavaDynamicTasks {
             }
         }
 
-        List<Integer> result = new ArrayList<>();
 
         while (pos != -1) {
             result.add(0, list.get(pos));
